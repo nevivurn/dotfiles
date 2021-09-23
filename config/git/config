@@ -1,0 +1,14 @@
+[user]
+	name = Yongun Seong
+	email = nevivurn@nevi.dev
+	signingKey = 183D9FD1759BD8C55834FE26C9CFF238D0506E0E
+[alias]
+	graph = log --all --graph --oneline --decorate=full
+[commit]
+	gpgSign = true
+[tag]
+	gpgSign = true
+[pull]
+	rebase = true
+[rebase]
+	autoStash = true

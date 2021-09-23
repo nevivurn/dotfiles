@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Wrapper around foot for wofi --show=drun.
+# We need to remove the leading -e
+
+shift
+exec foot -- "$@"

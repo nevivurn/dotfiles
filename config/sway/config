@@ -1,0 +1,180 @@
+# Shared variables
+set $mod Mod4
+set $up k
+set $down j
+set $left h
+set $right l
+
+include /etc/sway/config-vars.d/*
+
+# TODO: check if exec exec is harmful
+
+# global config
+xwayland enable
+tiling_drag disable
+
+focus_follows_mouse no
+focus_on_window_activation urgent
+focus_wrapping no
+workspace_auto_back_and_forth yes
+
+default_border pixel 2
+default_floating_border pixel 2
+gaps inner 10
+hide_edge_borders smart_no_gaps
+
+font pango:Bitstream Vera Sans Mono 8
+
+bindsym $mod+Return exec exec footclient
+bindsym $mod+d exec exec wofi --show drun
+bindsym $mod+p exec exec passmenu
+bindsym $mod+Shift+p exec exec passmenu --otp
+
+# basic movement
+bindsym $mod+$up focus up
+bindsym $mod+$down focus down
+bindsym $mod+$left focus left
+bindsym $mod+$right focus right
+# basic rearrangement
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$right move right
+
+# containers
+bindsym $mod+a focus parent
+bindsym $mod+q focus child
+
+# floating
+bindsym $mod+space focus mode_toggle
+bindsym $mod+Shift+space floating toggle
+floating_modifier $mod normal
+
+# basic workspace
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+# move windows between workspaces
+bindsym $mod+Shift+1 move container to workspace number 1, workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2, workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3, workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4, workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5, workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6, workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7, workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8, workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9, workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10, workspace number 10
+# move workspaces between outputs
+bindsym $mod+Control+$up move workspace to output up
+bindsym $mod+Control+$down move workspace to output down
+bindsym $mod+Control+$left move workspace to output left
+bindsym $mod+Control+$right move workspace to output right
+
+# assign workspace 10 to secondary screen
+workspace 10 output HDMI-A-1
+
+# layouting
+bindsym $mod+f fullscreen toggle
+bindsym $mod+s split toggle
+bindsym $mod+e layout toggle split
+bindsym $mod+w layout tabbed
+
+# control
+bindsym $mod+Shift+r reload
+bindsym $mod+Shift+q kill
+
+output * background ~/pics/background/Dracula/debian.png fill
+output DP-3 position 0 0
+output HDMI-A-1 position 2560 0
+
+input type:keyboard {
+	xkb_layout kr
+	xkb_variant kr104
+}
+
+exec exec swayidle -w \
+	timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
+# TODO: wait for swaylock to land on debian
+# exec swayidle -w \
+#          timeout 300 'swaylock -f -c 000000' \
+#          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+#          before-sleep 'swaylock -f -c 000000'
+exec fcitx5 -dr
+exec exec foot --server
+
+# set up environment variables for systemd/dbus
+# Some are handled by /etc/sway/config.d/50-systemd-user.conf, but we need to
+# configure these.
+set $dbusenv XDG_SESSION_TYPE XDG_CURRENT_DESKTOP
+exec systemctl --user import-environment $dbusenv
+exec hash dbus-update-activation-environment 2>/dev/null && \
+	dbus-update-activation-environment --systemd $dbusenv
+
+mode "resize" {
+	# units omitted, regular use ppt and floating use px
+	bindsym $right resize grow width 5
+	bindsym $left resize shrink width 5
+	bindsym $down resize grow height 5
+	bindsym $up resize shrink height 5
+
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+mode "exit" {
+	bindsym e exit
+	bindsym Shift+r exec systemctl reboot
+	bindsym Shift+p exec systemctl poweroff
+
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+Shift+e mode "exit"
+
+bar {
+	font pango:Bitstream Vera Sans Mono, FontAwesome 8
+	pango_markup on
+	status_command exec i3status
+	position bottom
+
+	# disable all mouse controls on bar
+	bindsym button1 nop
+	bindsym button2 nop
+	bindsym button3 nop
+	bindsym button4 nop
+	bindsym button5 nop
+	bindsym button6 nop
+	bindsym button7 nop
+	bindsym button8 nop
+	bindsym button9 nop
+
+	colors {
+		background #282A36
+			statusline #F8F8F2
+			separator  #44475A
+
+			# slightly modified from dracula defaults
+			focused_workspace  #6272A4 #44475A #F8F8F2
+			active_workspace   #282A36 #44475A #F8F8F2
+			inactive_workspace #282A36 #282A36 #BFBFBF
+			urgent_workspace   #FF5555 #FF5555 #F8F8F2
+			binding_mode       #FF5555 #FF5555 #F8F8F2
+	}
+}
+
+client.focused          #6272A4 #6272A4 #F8F8F2 #8BE9FD #6272A4
+client.focused_inactive #44475A #44475A #F8F8F2 #44475A #44475A
+client.unfocused        #282A36 #282A36 #BFBFBF #282A36 #282A36
+client.urgent           #44475A #FF5555 #F8F8F2 #FF5555 #FF5555
+client.placeholder      #282A36 #282A36 #F8F8F2 #282A36 #282A36
+
+include /etc/sway/config.d/*

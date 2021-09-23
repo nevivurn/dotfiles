@@ -1,0 +1,6 @@
+[submodule "dracula/gtk"]
+	path = dracula/gtk
+	url = https://github.com/dracula/gtk.git
+[submodule "dracula/wallpaper"]
+	path = dracula/wallpaper
+	url = https://github.com/dracula/wallpaper.git

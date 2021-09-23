@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# Stolen and adapted from /usr/share/doc/pass/examples/dmenu
+
+set -eu -o pipefail
+shopt -s nullglob globstar
+
+passcmd=show
+if [[ "$#" -ge 1 && "$1" == "--otp" ]]; then
+	passcmd="otp code"
+	shift
+fi
+
+prefix=${PASSWORD_STORE_DIR-~/.password-store}
+password_files=( "$prefix"/**/*.gpg )
+password_files=( "${password_files[@]#"$prefix"/}" )
+password_files=( "${password_files[@]%.gpg}" )
+
+# force alphabetical ordering for safety and muscle memory
+password=$(printf '%s\n' "${password_files[@]}" | wofi -O alphabetical --show=dmenu "$@")
+[[ -n $password ]] || exit
+
+# wtype - is not documented (yet) on debian, but supported
+pass $passcmd "$password" | { IFS= read -r pass; printf %s "$pass"; } |
+	wtype -

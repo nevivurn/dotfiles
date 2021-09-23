@@ -1,0 +1,48 @@
+general {
+	output_format = "i3bar"
+	markup = "pango"
+
+	color_good = "#50FA7B"
+	color_degraded = "#FFB86C"
+	color_bad = "#FF5555"
+}
+
+order += "cpu_usage"
+cpu_usage {
+	format = "&#xf085; %usage"
+	degraded_threshold = 80
+	max_threshold = 95
+
+	separator = false
+}
+
+order += "cpu_temperature cpu"
+cpu_temperature cpu {
+	format = "&#xf2c7; %degrees&#176;C"
+	max_threshold = 80
+	path = "/sys/class/hwmon/hwmon1/temp1_input"
+}
+
+order += "cpu_temperature gpu"
+cpu_temperature gpu {
+	format = "&#xf013;&#xf2c7; %degrees&#176;C"
+	max_threshold = 60
+	path = "/sys/class/hwmon/hwmon3/temp1_input"
+}
+
+order += "memory"
+memory {
+	format = "&#xf2db; %percentage_used"
+	threshold_degraded = "20%"
+	threshold_critical = "10%"
+}
+
+order += "disk /"
+disk / {
+	format = "&#xf1c0; %percentage_used"
+}
+
+order += "time"
+time {
+	format = "%a %F (%I %p) %T"
+}

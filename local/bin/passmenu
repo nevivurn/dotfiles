@@ -16,8 +16,8 @@ password_files=( "$prefix"/**/*.gpg )
 password_files=( "${password_files[@]#"$prefix"/}" )
 password_files=( "${password_files[@]%.gpg}" )
 
-# force alphabetical ordering for safety and muscle memory
-password=$(printf '%s\n' "${password_files[@]}" | wofi -O alphabetical --show=dmenu "$@")
+# force alphabetical ordering for safety and muscle memory, also larger window
+password=$(printf '%s\n' "${password_files[@]}" | wofi -O alphabetical --lines 10 --width 500 --show=dmenu)
 [[ -n $password ]] || exit
 
 # wtype - is not documented (yet) on debian, but supported

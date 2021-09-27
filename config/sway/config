@@ -92,7 +92,7 @@ bindsym $mod+w layout tabbed
 bindsym $mod+Shift+r reload
 bindsym $mod+Shift+q kill
 
-output * background ~/pics/background/Dracula/debian.png fill
+output * background ~/pics/background/current fill
 output DP-3 position 0 0
 output HDMI-A-1 position 2560 0
 

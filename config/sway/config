@@ -29,6 +29,7 @@ bindsym $mod+Return exec exec footclient
 bindsym $mod+d exec exec wofi --show drun
 bindsym $mod+p exec exec passmenu
 bindsym $mod+Shift+p exec exec passmenu --otp
+bindsym Control+Space exec makoctl dismiss
 
 # basic movement
 bindsym $mod+$up focus up

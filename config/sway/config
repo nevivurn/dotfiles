@@ -101,8 +101,9 @@ input type:keyboard {
 	xkb_variant kr104
 }
 
-exec exec swayidle -w \
-	timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
+# TODO: chrome seems to soft-lock the kernel when the screen turns off, so disabled
+#exec exec swayidle -w \
+#	timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
 # TODO: wait for swaylock to land on debian
 # exec swayidle -w \
 #          timeout 300 'swaylock -f -c 000000' \

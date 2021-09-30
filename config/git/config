@@ -12,3 +12,6 @@
 	rebase = true
 [rebase]
 	autoStash = true
+[core]
+	# make git pager act more like usual, in particular with scrolling
+	pager = less -+X

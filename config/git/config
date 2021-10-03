@@ -15,3 +15,5 @@
 [core]
 	# make git pager act more like usual, in particular with scrolling
 	pager = less -+X
+[init]
+	defaultBranch = master

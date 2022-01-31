@@ -92,9 +92,10 @@ bindsym $mod+w layout tabbed
 bindsym $mod+Shift+r reload
 bindsym $mod+Shift+q kill
 
-output * background ~/pics/background/current fill
-output DP-3 position 0 0
-output HDMI-A-1 position 2560 0
+output DP-3 background ~/pics/background/current-1 fill
+output HDMI-A-1 background ~/pics/background/current-2 fill
+output DP-3 position 1920 0
+output HDMI-A-1 position 0 0
 
 input type:keyboard {
 	xkb_layout kr
@@ -111,6 +112,9 @@ input type:keyboard {
 #          before-sleep 'swaylock -f -c 000000'
 exec fcitx5 -dr
 exec exec foot --server
+
+# Seoul coords
+exec exec redshift -l 37.56,126.99
 
 # set up environment variables for systemd/dbus
 # Some are handled by /etc/sway/config.d/50-systemd-user.conf, but we need to

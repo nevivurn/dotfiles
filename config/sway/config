@@ -114,7 +114,7 @@ exec fcitx5 -dr
 exec exec foot --server
 
 # Seoul coords
-exec exec redshift -l 37.56,126.99
+exec exec redshift -l 37.56:126.99
 
 # set up environment variables for systemd/dbus
 # Some are handled by /etc/sway/config.d/50-systemd-user.conf, but we need to

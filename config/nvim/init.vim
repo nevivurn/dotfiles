@@ -14,7 +14,7 @@ map <C-n> :cnext<CR>
 map <C-p> :cprev<CR>
 
 " build shortcuts
-nmap <leader>b :make<CR>
+autocmd FileType c nmap <leader>b :make %:t:r<CR>
 
 " unmap K
 map <S-k> <Nop>
